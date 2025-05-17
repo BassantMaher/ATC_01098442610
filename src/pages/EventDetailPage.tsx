@@ -150,7 +150,7 @@ const EventDetailPage: React.FC = () => {
             </div>
             
             <div className="space-y-6">
-              <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">{t('events.description')}</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">{t('events.decription')}</h2>
               <p className="text-gray-700 dark:text-gray-300 whitespace-pre-line leading-relaxed">{description}</p>
             </div>
             
