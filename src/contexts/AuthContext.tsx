@@ -4,6 +4,16 @@ import { jwtDecode } from 'jwt-decode';
 import { AuthState, User } from '../types';
 import { API_URL } from '../config';
 
+// Helper function to handle OAuth token from URL
+const getOAuthTokenFromUrl = () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const token = urlParams.get('token');
+  if (token) {
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }
+  return token;
+};
+
 interface AuthContextProps {
   authState: AuthState;
   login: (email: string, password: string) => Promise<void>;
@@ -30,11 +40,43 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   });
   const [loading, setLoading] = useState<boolean>(false);
 
+  const handleOAuthToken = (token: string) => {
+    try {
+      const decoded = jwtDecode<User & { exp: number }>(token);
+      const currentTime = Date.now() / 1000;
+      
+      if (decoded.exp < currentTime) {
+        throw new Error('Token expired');
+      }
+      
+      localStorage.setItem('token', token);
+      setAuthState({
+        isAuthenticated: true,
+        user: decoded,
+        loading: false,
+      });
+    } catch (error) {
+      console.error('Error handling OAuth token:', error);
+      localStorage.removeItem('token');
+      setAuthState({
+        isAuthenticated: false,
+        user: null,
+        loading: false,
+      });
+    }
+  };
+
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = getOAuthTokenFromUrl();
     if (token) {
+      handleOAuthToken(token);
+      return;
+    }
+    
+    const storedToken = localStorage.getItem('token');
+    if (storedToken) {
       try {
-        const decoded = jwtDecode<User & { exp: number }>(token);
+        const decoded = jwtDecode<User & { exp: number }>(storedToken);
         const currentTime = Date.now() / 1000;
         
         if (decoded.exp < currentTime) {
@@ -47,13 +89,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         } else {
           setAuthState({
             isAuthenticated: true,
-            user: {
-              _id: decoded._id,
-              name: decoded.name,
-              email: decoded.email,
-              role: decoded.role,
-              createdAt: decoded.createdAt,
-            },
+            user: decoded,
             loading: false,
           });
         }

@@ -74,6 +74,8 @@ export default {
       submit: "تسجيل جديد",
       haveAccount: "لديك حساب بالفعل؟",
       login: "تسجيل الدخول",
+      orWithEmail: "أو المتابعة عبر البريد الإلكتروني",
+      withGoogle: "متابعة عبر جوجل",
     },
   },
   admin: {

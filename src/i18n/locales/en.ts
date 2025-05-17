@@ -77,6 +77,8 @@ export default {
       submit: "Sign Up",
       haveAccount: "Already have an account?",
       login: "Sign In",
+      orWithEmail: "Or Continue with Email",
+      withGoogle: "Continue with Google",
     },
   },
   admin: {

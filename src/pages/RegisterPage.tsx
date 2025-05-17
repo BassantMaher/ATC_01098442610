@@ -6,6 +6,7 @@ import { useAuth } from '../contexts/AuthContext';
 import Layout from '../components/Layout';
 import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
+import { OAuthButtons } from '../components/auth/OAuthButtons';
 import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/Card';
 
 const RegisterPage: React.FC = () => {
@@ -65,6 +66,16 @@ const RegisterPage: React.FC = () => {
             )}
             
             <form onSubmit={handleSubmit} className="space-y-6">
+              <OAuthButtons className="mb-6" />
+              
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-gray-300" />
+                </div>
+                <div className="relative flex justify-center text-sm">
+                  <span className="px-2 text-gray-500 bg-white">{t('auth.register.orWithEmail')}</span>
+                </div>
+              </div>
               <div>
                 <Input
                   label={t('auth.register.name')}
@@ -75,7 +86,7 @@ const RegisterPage: React.FC = () => {
                   onChange={handleChange}
                   fullWidth
                   required
-                  className='py-1'
+                  className='py-1 px-2'
                 />
               </div>
               
@@ -89,7 +100,7 @@ const RegisterPage: React.FC = () => {
                   onChange={handleChange}
                   fullWidth
                   required
-                  className='py-1'
+                  className='py-1 px-2'
                 />
               </div>
               
@@ -103,7 +114,7 @@ const RegisterPage: React.FC = () => {
                   onChange={handleChange}
                   fullWidth
                   required
-                  className='py-1'
+                  className='py-1 px-2'
                 />
               </div>
               

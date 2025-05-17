@@ -16,8 +16,19 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
+      required: function() {
+        return !this.oauthProvider; // Password only required if not using OAuth
+      },
       minlength: 6,
+    },
+    oauthProvider: {
+      type: String,
+      enum: ['google', null],
+      default: null
+    },
+    oauthId: {
+      type: String,
+      sparse: true
     },
     role: {
       type: String,
@@ -32,7 +43,7 @@ const userSchema = new mongoose.Schema(
 
 // Hash password before saving
 userSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) {
+  if (!this.isModified('password') || !this.password) {
     return next();
   }
 
