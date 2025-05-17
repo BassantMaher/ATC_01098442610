@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { Plus } from 'lucide-react';
+import { Plus, CalendarDays, BookOpen, AlertCircle, Pencil } from 'lucide-react';
 import { Event, Booking } from '../types';
 import { eventsApi, bookingsApi } from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
@@ -53,8 +53,6 @@ const AdminPage: React.FC = () => {
       setLoading(true);
       const data = await bookingsApi.getAllBookings();
       setBookings(data.bookings);
-    } catch (err) {
-      setError('Failed to load bookings.');
     } finally {
       setLoading(false);
     }
@@ -142,20 +140,22 @@ const AdminPage: React.FC = () => {
               <nav className="flex">
                 <button
                   className={`px-6 py-4 text-sm font-medium ${activeTab === 'events'
-                      ? 'text-blue-500 border-b-2 border-blue-500'
-                      : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
-                    }`}
+                      ? 'text-blue-500 border-b-2 border-blue-500 bg-blue-50 dark:bg-blue-900'
+                      : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                    } flex items-center gap-2 transition-all duration-200`}
                   onClick={() => handleTabChange('events')}
                 >
+                  <CalendarDays className="w-5 h-5" />
                   {t('admin.events')}
                 </button>
                 <button
                   className={`px-6 py-4 text-sm font-medium ${activeTab === 'bookings'
-                      ? 'text-blue-500 border-b-2 border-blue-500'
-                      : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
-                    }`}
+                      ? 'text-blue-500 border-b-2 border-blue-500 bg-blue-50 dark:bg-blue-900'
+                      : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                    } flex items-center gap-2 transition-all duration-200`}
                   onClick={() => handleTabChange('bookings')}
                 >
+                  <BookOpen className="w-5 h-5" />
                   {t('admin.bookings')}
                 </button>
               </nav>
@@ -165,8 +165,9 @@ const AdminPage: React.FC = () => {
 
           <div className="p-6">
             {error && (
-              <div className="bg-red-100 dark:bg-red-900 border border-red-400 dark:border-red-700 text-red-700 dark:text-red-200 px-4 py-3 rounded-lg mb-6">
-                {error}
+              <div className="bg-red-100 dark:bg-red-900 border border-red-400 dark:border-red-700 text-red-700 dark:text-red-200 px-4 py-3 rounded-lg mb-6 flex items-center gap-2 animate-fade-in">
+                <AlertCircle className="w-5 h-5 mr-2 text-red-500 dark:text-red-300" />
+                <span>{error}</span>
               </div>
             )}
 
@@ -175,13 +176,14 @@ const AdminPage: React.FC = () => {
                 <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
               </div>
             ) : showEventForm ? (
-              <Card>
-                <CardHeader>
-                  <CardTitle>
-                    {selectedEvent ? t('admin.editEvent') : t('admin.createEvent')}
+              <Card className="p-2 md:p-6">
+                <CardHeader className="flex items-center gap-2 pb-2 md:pb-4">
+                  <CardTitle className="flex items-center gap-2 text-xl md:text-2xl">
+                    {selectedEvent ? <Pencil className="w-6 h-6 text-blue-500" /> : <Plus className="w-6 h-6 text-blue-500" />}
+                    <span>{selectedEvent ? t('admin.editEvent') : t('admin.createEvent')}</span>
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 md:p-6">
                   <EventForm
                     event={selectedEvent || undefined}
                     onSubmit={handleEventSubmit}

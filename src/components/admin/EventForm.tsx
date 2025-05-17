@@ -63,7 +63,7 @@ const EventForm: React.FC<EventFormProps> = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-8 bg-white/80 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-gray-100 dark:border-gray-700">
       <div>
         <Input
           label={t('admin.eventForm.title')}
@@ -74,12 +74,12 @@ const EventForm: React.FC<EventFormProps> = ({
           error={errors.title}
           fullWidth
           required
-          className='py-1'
+          className="py-2.5"
         />
       </div>
       
       <div>
-        <label htmlFor="description" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label htmlFor="description" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
           {t('admin.eventForm.description')}
         </label>
         <textarea
@@ -88,15 +88,16 @@ const EventForm: React.FC<EventFormProps> = ({
           rows={4}
           value={formData.description}
           onChange={handleChange}
-          className={`w-full rounded-md shadow-sm border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 
-            focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-400 dark:focus:border-blue-400
-            bg-white dark:bg-gray-700 ${errors.description ? 'border-red-500' : ''}`}
+          className={`w-full rounded-lg shadow-sm border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 
+            focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-400 dark:focus:border-blue-400
+            bg-white/80 dark:bg-gray-700/90 backdrop-blur-sm transition-all duration-200
+            hover:shadow-md ${errors.description ? 'border-red-500' : ''}`}
           required
         />
-        {errors.description && <p className="mt-1 text-sm text-red-500">{errors.description}</p>}
+        {errors.description && <p className="mt-2 text-sm text-red-500 flex items-center gap-1">{errors.description}</p>}
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
           <Input
             label={t('admin.eventForm.date')}
@@ -108,7 +109,7 @@ const EventForm: React.FC<EventFormProps> = ({
             error={errors.date}
             fullWidth
             required
-            className='py-1 text-sm'
+            className="py-2.5 text-sm"
           />
         </div>
         
@@ -122,14 +123,14 @@ const EventForm: React.FC<EventFormProps> = ({
             error={errors.venue}
             fullWidth
             required
-            className='py-1'
+            className="py-2.5"
           />
         </div>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div>
-          <label htmlFor="category" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          <label htmlFor="category" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             {t('admin.eventForm.category')}
           </label>
           <select
@@ -137,17 +138,17 @@ const EventForm: React.FC<EventFormProps> = ({
             name="category"
             value={formData.category}
             onChange={handleChange}
-            className="w-full rounded-md shadow-sm border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 
-              focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-400 dark:focus:border-blue-400
-              bg-white dark:bg-gray-700 py-1"
+            className="w-full rounded-lg shadow-sm border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 
+              focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-400 dark:focus:border-blue-400
+              bg-white/80 dark:bg-gray-700/90 backdrop-blur-sm py-2.5 transition-all duration-200
+              hover:shadow-md"
             required
-            
           >
             {EVENT_CATEGORIES.map(category => (
               <option key={category} value={category}>{category}</option>
             ))}
           </select>
-          {errors.category && <p className="mt-1 text-sm text-red-500 py-1">{errors.category}</p>}
+          {errors.category && <p className="mt-2 text-sm text-red-500">{errors.category}</p>}
         </div>
         
         <div>
@@ -163,7 +164,7 @@ const EventForm: React.FC<EventFormProps> = ({
             error={errors.price}
             fullWidth
             required
-            className='py-1'
+            className="py-2.5"
           />
         </div>
         
@@ -179,7 +180,7 @@ const EventForm: React.FC<EventFormProps> = ({
             error={errors.capacity}
             fullWidth
             required
-            className='py-1'
+            className="py-2.5"
           />
         </div>
       </div>
@@ -193,15 +194,16 @@ const EventForm: React.FC<EventFormProps> = ({
           onChange={handleChange}
           placeholder="https://example.com/image.jpg"
           fullWidth
-          className='py-1'
+          className="py-2.5"
         />
       </div>
       
-      <div className="flex justify-end space-x-3">
+      <div className="flex justify-end space-x-4 pt-4">
         <Button
           type="button"
           variant="outline"
           onClick={onCancel}
+          className="px-6"
         >
           {t('admin.eventForm.cancel')}
         </Button>
@@ -209,6 +211,7 @@ const EventForm: React.FC<EventFormProps> = ({
           type="submit"
           variant="primary"
           isLoading={isLoading}
+          className="px-6"
         >
           {t('admin.eventForm.submit')}
         </Button>

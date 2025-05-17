@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { UserPlus } from 'lucide-react';
+import { UserPlus, Mail, Lock, User, AlertCircle } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import Layout from '../components/Layout';
 import Input from '../components/ui/Input';
@@ -60,8 +60,9 @@ const RegisterPage: React.FC = () => {
           </CardHeader>
           <CardContent>
             {error && (
-              <div className="mb-4 bg-red-100 dark:bg-red-900 border border-red-400 dark:border-red-700 text-red-700 dark:text-red-200 px-4 py-3 rounded-lg">
-                {error}
+              <div className="mb-4 bg-red-100 dark:bg-red-900 border border-red-400 dark:border-red-700 text-red-700 dark:text-red-200 px-4 py-3 rounded-lg flex items-center gap-2 animate-fade-in">
+                <AlertCircle className="w-5 h-5 mr-2 text-red-500 dark:text-red-300" />
+                <span>{error}</span>
               </div>
             )}
             
@@ -86,7 +87,8 @@ const RegisterPage: React.FC = () => {
                   onChange={handleChange}
                   fullWidth
                   required
-                  className='py-1 px-2'
+                  leftIcon={<User className="w-5 h-5" />}
+                  className="py-1 px-2"
                 />
               </div>
               
@@ -100,7 +102,8 @@ const RegisterPage: React.FC = () => {
                   onChange={handleChange}
                   fullWidth
                   required
-                  className='py-1 px-2'
+                  leftIcon={<Mail className="w-5 h-5" />}
+                  className="py-1 px-2"
                 />
               </div>
               
@@ -114,7 +117,8 @@ const RegisterPage: React.FC = () => {
                   onChange={handleChange}
                   fullWidth
                   required
-                  className='py-1 px-2'
+                  leftIcon={<Lock className="w-5 h-5" />}
+                  className="py-1 px-2"
                 />
               </div>
               

@@ -94,76 +94,73 @@ const EventDetailPage: React.FC = () => {
   
   return (
     <Layout>
-      <div className="max-w-4xl mx-auto">
-        <Link to="/events" className="inline-flex items-center text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 mb-6">
-          <ArrowLeft size={16} className="mr-1" />
+      <div className="max-w-4xl mx-auto px-4">
+        <Link to="/events" className="inline-flex items-center text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 mb-8 group">
+          <ArrowLeft size={16} className="mr-2 transition-transform group-hover:-translate-x-1" />
           {t('eventDetails.backToEvents')}
         </Link>
         
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
-          <div className="h-64 sm:h-96 overflow-hidden">
+        <div className="bg-white/80 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700">
+          <div className="h-[400px] sm:h-[500px] overflow-hidden relative group">
             <img 
               src={image || DEFAULT_EVENT_IMAGE} 
               alt={title}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent">
+              <div className="absolute bottom-0 left-0 right-0 p-8">
+                <h1 className="text-4xl font-bold text-white mb-4">{title}</h1>
+                <div className="flex flex-wrap gap-4">
+                  <span className="px-4 py-2 rounded-full bg-blue-500/20 backdrop-blur-sm text-white flex items-center">
+                    <Calendar size={18} className="mr-2" />
+                    {formattedDate}
+                  </span>
+                  <span className="px-4 py-2 rounded-full bg-blue-500/20 backdrop-blur-sm text-white flex items-center">
+                    <MapPin size={18} className="mr-2" />
+                    {venue}
+                  </span>
+                  <span className="px-4 py-2 rounded-full bg-blue-500/20 backdrop-blur-sm text-white flex items-center">
+                    <Tag size={18} className="mr-2" />
+                    {category}
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
           
-          <div className="p-6">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">{title}</h1>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 my-6">
-              <div className="flex items-center bg-blue-50 dark:bg-blue-900/30 p-4 rounded-lg">
-                <Calendar size={24} className="text-blue-500 mr-3" />
+          <div className="p-8">
+            <div className="flex flex-wrap gap-8 items-center justify-between mb-8 pb-8 border-b border-gray-200 dark:border-gray-700">
+              <div className="flex items-center bg-green-50 dark:bg-green-900/30 px-6 py-4 rounded-xl">
+                <DollarSign size={28} className="text-green-500 mr-3" />
                 <div>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">{t('events.date')}</p>
-                  <p className="font-medium text-gray-900 dark:text-white">{formattedDate}</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">{t('events.price')}</p>
+                  <p className="text-3xl font-bold text-gray-900 dark:text-white">${price.toFixed(2)}</p>
                 </div>
               </div>
               
-              <div className="flex items-center bg-blue-50 dark:bg-blue-900/30 p-4 rounded-lg">
-                <MapPin size={24} className="text-blue-500 mr-3" />
+              <div className="flex items-center bg-blue-50 dark:bg-blue-900/30 px-6 py-4 rounded-xl">
+                <Users size={28} className="text-blue-500 mr-3" />
                 <div>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">{t('events.venue')}</p>
-                  <p className="font-medium text-gray-900 dark:text-white">{venue}</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center bg-blue-50 dark:bg-blue-900/30 p-4 rounded-lg">
-                <Tag size={24} className="text-blue-500 mr-3" />
-                <div>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">{t('events.category')}</p>
-                  <p className="font-medium text-gray-900 dark:text-white">{category}</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">{t('events.capacity')}</p>
+                  <p className="text-3xl font-bold text-gray-900 dark:text-white">
+                    {spotsLeft} / {capacity}
+                  </p>
                 </div>
               </div>
             </div>
             
-            <div className="my-6 flex justify-between items-center">
-              <div className="flex items-center">
-                <DollarSign size={24} className="text-green-500 mr-2" />
-                <span className="text-2xl font-bold text-gray-900 dark:text-white">${price.toFixed(2)}</span>
-              </div>
-              
-              <div className="flex items-center">
-                <Users size={24} className="text-blue-500 mr-2" />
-                <span className="text-lg font-medium text-gray-900 dark:text-white">
-                  {spotsLeft} / {capacity} {t('events.spots')}
-                </span>
-              </div>
+            <div className="space-y-6">
+              <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">{t('events.description')}</h2>
+              <p className="text-gray-700 dark:text-gray-300 whitespace-pre-line leading-relaxed">{description}</p>
             </div>
             
-            <div className="my-6">
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">{t('events.decription')}</h2>
-              <p className="text-gray-700 dark:text-gray-300 whitespace-pre-line">{description}</p>
-            </div>
-            
-            <div className="mt-8">
+            <div className="mt-10">
               {isBooked ? (
-                <div className="px-4 py-3 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-100 rounded-lg text-center font-medium">
+                <div className="px-6 py-4 bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-100 rounded-xl text-center font-medium backdrop-blur-sm">
                   {t('eventDetails.booked')}
                 </div>
               ) : isSoldOut ? (
-                <div className="px-4 py-3 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-100 rounded-lg text-center font-medium">
+                <div className="px-6 py-4 bg-gray-100 dark:bg-gray-700/50 text-gray-800 dark:text-gray-100 rounded-xl text-center font-medium backdrop-blur-sm">
                   {t('eventDetails.soldOut')}
                 </div>
               ) : (
@@ -173,6 +170,7 @@ const EventDetailPage: React.FC = () => {
                   fullWidth 
                   onClick={handleBook}
                   isLoading={bookingInProgress}
+                  className="py-4 text-lg"
                 >
                   {t('eventDetails.book')}
                 </Button>
